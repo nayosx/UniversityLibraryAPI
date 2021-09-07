@@ -10,3 +10,10 @@ gem install pg --platform=mswin32 -- --with-pg-dir="C:\Program Files\PostgreSQL\
 
 https://github.com/ged/ruby-pg/issues/365#issuecomment-758717354
 ridk exec pacman -S mingw-w64-x86_64-postgresql
+
+
+gem install bcrypt
+bundle update
+
+descomentar en gemfile y volver a hacer 
+bundle update

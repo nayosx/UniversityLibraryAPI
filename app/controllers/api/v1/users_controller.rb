@@ -14,13 +14,9 @@ class Api::V1::UsersController < ApplicationController
 
     def create
         @obj = User.new(obj_params)
-        if @obj.save
-            render json: @obj
-        else
-            render json: { 
-                error: 'Unable to create', status: 400
-            }, status: 400
-        end
+        @obj.password = obj_params[:password]
+
+        render json: @obj
     end
 
     def update
