@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  book: one
+  user: one
+  dateOfReturn: 2021-09-06 16:17:57
+  penaltyFee: 
+
+two:
+  book: two
+  user: two
+  dateOfReturn: 2021-09-06 16:17:57
+  penaltyFee: 
