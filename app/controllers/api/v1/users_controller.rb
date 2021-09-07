@@ -14,9 +14,19 @@ class Api::V1::UsersController < ApplicationController
 
     def create
         @obj = User.new(obj_params)
-        @obj.password = obj_params[:password]
-
-        render json: @obj
+        if @obj.valid?
+            if @obj.save
+                render json: @obj
+            else
+                render json: { 
+                 error: 'Unable to create', status: 400
+             }, status: 400
+            end
+        else
+             render json: { 
+                 error: 'Is not valid to create', status: 400
+             }, status: 400
+        end
     end
 
     def update
@@ -45,12 +55,21 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def login
+        @obj = User.find_by(email: params[:email])
+        if @obj && @obj.authenticate(params[:password])
+            render json: {"message": "login ON"}, status: 200
+        else
+            render json: {"message": "login OFF"}, status: 401
+        end
+    end
+
     def find_obj
         @obj = User.find(params[:id])
     end
 
     private 
     def obj_params
-        params.require(:user).permit(:rol_id, :name, :lastname, :email, :password, :phone)
+        params.require(:user).permit(:rol_id, :name, :lastname, :email, :password, :phone, :password_confirmation)
     end
 end

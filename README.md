@@ -13,7 +13,8 @@ ridk exec pacman -S mingw-w64-x86_64-postgresql
 
 
 gem install bcrypt
-bundle update
+gem 'bcrypt'
+bundle install
 
 descomentar en gemfile y volver a hacer 
 bundle update
