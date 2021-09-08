@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     end
   end
 
-  post "api/v1/login", to: "api/v1/users#login"
+  post "api/v1/users/auth/login", to: "api/v1/users#login"
+  post "api/v1/users/auth/logout", to: "api/v1/users#logout"
 
 end

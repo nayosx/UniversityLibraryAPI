@@ -4,8 +4,14 @@ class Api::V1::BooksController < ApplicationController
     before_action :obj_params, only: :create
 
     def index
-        @objs = Book.all
-        render json: @objs
+        searchParams = request.query_parameters
+        if searchParams[:search]
+            @obj = Book.search(searchParams[:search], searchParams[:searchType])
+            render json: @obj 
+        else
+            @objs = Book.all
+            render json: @objs
+        end
     end
 
     def show

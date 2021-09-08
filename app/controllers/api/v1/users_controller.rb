@@ -64,6 +64,10 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def logout
+        render json: {"message": "Logout"}, status: 200
+    end
+
     def find_obj
         @obj = User.find(params[:id])
     end
