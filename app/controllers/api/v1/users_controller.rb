@@ -55,15 +55,6 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
-    def login
-        @obj = User.find_by(email: params[:email])
-        if @obj && @obj.authenticate(params[:password])
-            render json: {"message": "login ON"}, status: 200
-        else
-            render json: {"message": "login OFF"}, status: 401
-        end
-    end
-
     def logout
         render json: {"message": "Logout"}, status: 200
     end

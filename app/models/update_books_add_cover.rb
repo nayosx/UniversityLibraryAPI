@@ -1,0 +1,2 @@
+class UpdateBooksAddCover < ApplicationRecord
+end

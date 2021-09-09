@@ -23,3 +23,10 @@ gem install rack-cors
 or by adding the following line into your Gemfile:
 
 gem 'rack-cors'
+
+
+gem install jwt
+gem 'jwt'
+And run bundle install
+
+gem 'simple_command'

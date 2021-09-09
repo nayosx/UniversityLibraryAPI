@@ -1,0 +1,2 @@
+class UpdateBook < ApplicationRecord
+end
