@@ -16,5 +16,10 @@ gem install bcrypt
 gem 'bcrypt'
 bundle install
 
-descomentar en gemfile y volver a hacer 
+descomentar en gemfile y volver a hacer
 bundle update
+
+gem install rack-cors
+or by adding the following line into your Gemfile:
+
+gem 'rack-cors'
