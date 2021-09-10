@@ -10,7 +10,7 @@ class Api::V1::BooksController < ApplicationController
             render json: @obj 
         else
             @objs = Book.all
-            render json: @objs
+            render json: @objs, include: [:authors, :genders]
         end
     end
 
