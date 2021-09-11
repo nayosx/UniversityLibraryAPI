@@ -6,6 +6,9 @@ class Book < ApplicationRecord
     has_many :book_genders
     has_many :genders, through: :book_genders
 
+    has_many :loans
+    has_many :users, through: :loans
+
     def self.search(pattern, typeSearch)
         if pattern.blank?  # blank? covers both nil and empty string
           all
