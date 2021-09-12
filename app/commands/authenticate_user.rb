@@ -5,15 +5,15 @@ class AuthenticateUser
         @email = email
         @password = password
     end
-  
+
     def call
-        JsonWebToken.encode(user_id: user.id) if user
+        JsonWebToken.encode({user_id: user.id, rol: user.rol_id}) if user
     end
-  
+
     private
-  
+
     attr_accessor :email, :password
-  
+
     def user
         user = User.find_by_email(email)
         return user if user && user.authenticate(password)
