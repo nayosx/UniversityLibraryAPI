@@ -37,5 +37,7 @@ module UniversityLibrary
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.autoload_paths << Rails.root.join('lib')
+    #config.hosts.clear
+    #config.hosts << "44d6-190-86-135-54.ngrok.io"
   end
 end

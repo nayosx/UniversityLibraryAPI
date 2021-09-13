@@ -4,7 +4,7 @@ class Api::V1::GendersController < ApplicationController
     before_action :obj_params, only: :create
 
     def index
-        @objs = Gender.all
+        @objs = Gender.all.order(updated_at: :desc)
         render json: @objs
     end
 
@@ -17,7 +17,7 @@ class Api::V1::GendersController < ApplicationController
         if @obj.save
             render json: @obj
         else
-            render json: { 
+            render json: {
                 error: 'Unable to create', status: 400
             }, status: 400
         end
@@ -25,12 +25,12 @@ class Api::V1::GendersController < ApplicationController
 
     def update
         if @obj
-            @obj.update(obj_params) 
+            @obj.update(obj_params)
             render json: {
                 message: 'Successfully updated'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to update', status: 400
             }, status: 400
         end
@@ -43,7 +43,7 @@ class Api::V1::GendersController < ApplicationController
                 message: 'Successfully deleted'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to delete', status: 400
             }, status: 400
         end
@@ -53,7 +53,7 @@ class Api::V1::GendersController < ApplicationController
         @obj = Gender.find(params[:id])
     end
 
-    private 
+    private
     def obj_params
         params.require(:gender).permit(:name, :description)
     end

@@ -7,9 +7,9 @@ class Api::V1::BooksController < ApplicationController
         searchParams = request.query_parameters
         if searchParams[:search]
             @obj = Book.search(searchParams[:search], searchParams[:searchType])
-            render json: @obj 
+            render json: @obj
         else
-            @objs = Book.all
+            @objs = Book.all.order(updated_at: :desc)
             render json: @objs, include: [:authors, :genders]
         end
     end
@@ -23,7 +23,7 @@ class Api::V1::BooksController < ApplicationController
         if @obj.save
             render json: @obj
         else
-            render json: { 
+            render json: {
                 error: 'Unable to create', status: 400
             }, status: 400
         end
@@ -31,12 +31,12 @@ class Api::V1::BooksController < ApplicationController
 
     def update
         if @obj
-            @obj.update(obj_params) 
+            @obj.update(obj_params)
             render json: {
                 message: 'Successfully updated'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to update', status: 400
             }, status: 400
         end
@@ -49,7 +49,7 @@ class Api::V1::BooksController < ApplicationController
                 message: 'Successfully deleted'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to delete', status: 400
             }, status: 400
         end
@@ -59,8 +59,8 @@ class Api::V1::BooksController < ApplicationController
         @obj = Book.find(params[:id])
     end
 
-    private 
+    private
     def obj_params
-        params.require(:book).permit(:isbn, :title, :year, :total, :totalPage)
+        params.require(:book).permit(:isbn, :title, :year, :stock, :totalPage, :stockActual, :img, :description)
     end
 end

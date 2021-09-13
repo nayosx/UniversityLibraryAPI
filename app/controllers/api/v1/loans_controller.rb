@@ -3,9 +3,15 @@ class Api::V1::LoansController < ApplicationController
     before_action :find_obj, only: [:show, :update, :destroy]
     before_action :obj_params, only: :create
 
+    has_many :loans
+    has_many :books, through: :loans
+
+    has_many :loans
+    has_many :users, through: :loans
+
     def index
         @objs = Loan.all
-        render json: @objs
+        render json: @objs, include: [:books, :users]
     end
 
     def show
@@ -17,7 +23,7 @@ class Api::V1::LoansController < ApplicationController
         if @obj.save
             render json: @obj
         else
-            render json: { 
+            render json: {
                 error: 'Unable to create', status: 400
             }, status: 400
         end
@@ -25,12 +31,12 @@ class Api::V1::LoansController < ApplicationController
 
     def update
         if @obj
-            @obj.update(obj_params) 
+            @obj.update(obj_params)
             render json: {
                 message: 'Successfully updated'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to update', status: 400
             }, status: 400
         end
@@ -43,7 +49,7 @@ class Api::V1::LoansController < ApplicationController
                 message: 'Successfully deleted'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to delete', status: 400
             }, status: 400
         end
@@ -53,7 +59,7 @@ class Api::V1::LoansController < ApplicationController
         @obj = Loan.find(params[:id])
     end
 
-    private 
+    private
     def obj_params
         params.require(:loan).permit(:book_id, :user_id, :dateOfReturn, :penaltyFee)
     end

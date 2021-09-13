@@ -2,9 +2,10 @@ class Api::V1::UsersController < ApplicationController
 
     before_action :find_obj, only: [:show, :update, :destroy]
     before_action :obj_params, only: :create
+    before_action :obj_params_up, only: :update
 
     def index
-        @objs = User.all
+        @objs = User.all.where(rol_id: 1).order(updated_at: :desc)
         render json: @objs
     end
 
@@ -18,12 +19,12 @@ class Api::V1::UsersController < ApplicationController
             if @obj.save
                 render json: @obj
             else
-                render json: { 
+                render json: {
                  error: 'Unable to create', status: 400
              }, status: 400
             end
         else
-             render json: { 
+             render json: {
                  error: 'Is not valid to create', status: 400
              }, status: 400
         end
@@ -31,12 +32,12 @@ class Api::V1::UsersController < ApplicationController
 
     def update
         if @obj
-            @obj.update(obj_params) 
+            @obj.update(obj_params_up)
             render json: {
-                message: 'Successfully updated'
+                message: 'Successfully updated',
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to update', status: 400
             }, status: 400
         end
@@ -49,7 +50,7 @@ class Api::V1::UsersController < ApplicationController
                 message: 'Successfully deleted'
             }, status: 200
         else
-            render json: { 
+            render json: {
                 error: 'Unable to delete', status: 400
             }, status: 400
         end
@@ -63,8 +64,13 @@ class Api::V1::UsersController < ApplicationController
         @obj = User.find(params[:id])
     end
 
-    private 
+    private
     def obj_params
         params.require(:user).permit(:rol_id, :name, :lastname, :email, :password, :phone, :password_confirmation)
+    end
+
+    private
+    def obj_params_up
+      params.require(:user).permit(:rol_id, :name, :lastname, :phone, :email)
     end
 end
